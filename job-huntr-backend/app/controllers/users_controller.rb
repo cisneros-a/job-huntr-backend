@@ -5,10 +5,14 @@ class UsersController < ApplicationController
         render json: users
     end
 
-    def create 
+
+    def create
         @user = User.create(user_params)
+        
         if @user.valid?
-            render json: { user: UserSerializer.new(@user) }, status: :created
+            # payload = {user_id: user.id}
+            # token = encode_token(payload)
+            render json: {user: @user }, status: :created
         else
             render json: { error: 'failed to create user '}, status: :not_acceptable
         end    
@@ -17,7 +21,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:name, :email, :password_digest)
+        params.require(:user).permit(:name, :email, :password)
     end    
 
 end
