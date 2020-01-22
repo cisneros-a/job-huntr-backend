@@ -1,4 +1,6 @@
 class LeadsController < ApplicationController
+    skip_before_action :authorized
+    
     def index 
         leads = Lead.all 
         render json: leads
