@@ -15,9 +15,7 @@ class AuthController < ApplicationController
     private
    
     def user_login_params
-      puts "====auth login user==="
-      puts @user
-      params.require(:user).permit(:email, :password)
+          params.require(:user).permit(:email, :password)
     end
 
 end
