@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
     before_action :authorized
 
    def encode_token(payload)
-        JWT.encode(payload, 'my_s3cret')
+        JWT.encode(payload, 'my_s3cr3t')
    end
 
    def auth_header
@@ -11,9 +11,12 @@ class ApplicationController < ActionController::API
 
    def decoded_token
         if auth_header
+
             token = auth_header.split(' ')[1]
+
             begin 
-                JWT.decode(token,'my_s3cret', true, algorithm: 'HS256')
+                puts (JWT.decode(token, 'my_s3cr3t' , true, algorithm: 'HS256'))
+                
             rescue JWT::DecodeError
                 nil
             end
@@ -22,13 +25,15 @@ class ApplicationController < ActionController::API
 
     def current_user 
         if decoded_token
+            byebug
             user_id = decoded_token[0]['user_id']
             @user = User.find_by(id: user_id)
+
         end
     end
 
     def logged_in?
-       current_user
+       !!current_user
     end
 
     def authorized
