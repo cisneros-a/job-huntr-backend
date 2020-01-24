@@ -6,10 +6,21 @@ class LeadsController < ApplicationController
         render json: leads
     end
 
+    def show
+        lead = Lead.find(params[:id])
+        render json: lead
+      end 
+
     def create 
         @new = Lead.create(lead_params)
         puts @new
     end
+
+    def update
+        lead = Lead.find(params[:id])
+        lead.update(lead_params)
+      end
+      
     
     private 
 
