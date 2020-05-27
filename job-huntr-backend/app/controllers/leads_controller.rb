@@ -5,6 +5,16 @@ class LeadsController < ApplicationController
         leads = Lead.all 
         render json: leads
     end
+    
+     def myleads
+        leads = Lead.all
+        havent_heard_leads = leads.select{|lead| lead.status == "Haven't Heard Back"} 
+        heard_leads = leads.select{|lead| lead.status == "Heard Back"} 
+        interviewed_leads = leads.select{|lead| lead.status == "Interviewed"} 
+        
+
+        render json: {heardBack: heard_leads, haventHeardBack: havent_heard_leads, interviewed: interviewed_leads}
+    end
 
     def show
         lead = Lead.find(params[:id])
